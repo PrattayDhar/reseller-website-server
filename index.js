@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient, ServerApiVersion} = require('mongodb');
+const { MongoClient, ServerApiVersion,ObjectId} = require('mongodb');
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
@@ -19,6 +19,7 @@ async function run() {
     try {
         const serviceCollection = client.db('laptopdbc').collection('category')
         const productCollection = client.db('laptopdbc').collection('product')
+        const userCollection = client.db('laptopdbc').collection('user')
         // const reviewcollection = client.db('laptopdbc').collection('Reviews')
         app.get('/category', async (req, res) => {
             const query = {}
@@ -36,16 +37,21 @@ async function run() {
         //     const limitservice = await cursor.toArray()
         //     res.send(limitservice)
         // })
-        // app.get('/services/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const query = { _id: ObjectId(id) }
-        //     const user = await serviceCollection.findOne(query);
-        //     res.send(user)
-        // })
+        app.get('/product/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const user = await productCollection.findOne(query);
+            res.send(user)
+        })
 
         app.post("/productadd", async (req, res) => {
             const service = req.body;
             const result = await productCollection.insertOne(service);
+            res.send(result)
+        })
+        app.post("/useradd", async (req, res) => {
+            const service = req.body;
+            const result = await userCollection.insertOne(service);
             res.send(result)
         })
 
