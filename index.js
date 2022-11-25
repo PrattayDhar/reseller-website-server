@@ -54,6 +54,27 @@ async function run() {
             const result = await userCollection.insertOne(service);
             res.send(result)
         })
+        //Admin Route
+    app.get("/users/admin/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email };
+      const user = await userCollection.findOne(query);
+      res.send({ isAdmin: user?.role === "admin" });
+    });
+    //Buyer Route
+    app.get("/users/buyer/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email };
+      const user = await userCollection.findOne(query);
+      res.send({ isBuyer: user?.role === "buyer" });
+    });
+    //Seller Route
+    app.get("/users/seller/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { email };
+      const user = await userCollection.findOne(query);
+      res.send({ isSeller: user?.role === "seller" });
+    });
 
         // app.post("/AddReview", async (req, res) => {
         //     const review = req.body;
