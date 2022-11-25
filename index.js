@@ -21,7 +21,7 @@ async function run() {
         const productCollection = client.db('laptopdbc').collection('product')
         const userCollection = client.db('laptopdbc').collection('user')
         // const reviewcollection = client.db('laptopdbc').collection('Reviews')
-        app.get('/category', async (req, res) => {
+        app.get('/category',async (req, res) => {
             const query = {}
             const cursor = serviceCollection.find(query)
             const service = await cursor.toArray()
@@ -39,8 +39,8 @@ async function run() {
         // })
         app.get('/product/:id', async (req, res) => {
             const id = req.params.id;
-            const query = { _id: ObjectId(id) }
-            const user = await productCollection.findOne(query);
+            const query = { Category:id }
+            const user = await productCollection.find(query).toArray();
             res.send(user)
         })
 
