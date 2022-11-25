@@ -20,23 +20,13 @@ async function run() {
         const serviceCollection = client.db('laptopdbc').collection('category')
         const productCollection = client.db('laptopdbc').collection('product')
         const userCollection = client.db('laptopdbc').collection('user')
-        // const reviewcollection = client.db('laptopdbc').collection('Reviews')
         app.get('/category',async (req, res) => {
             const query = {}
             const cursor = serviceCollection.find(query)
             const service = await cursor.toArray()
             res.send(service)
         })
-        // app.get('/home', async (req, res) => {
-        //     const query = {}
-        //     const cursor = serviceCollection.find(query)
-        //         .sort({
-        //             _id: -1,
-        //         })
-        //         .limit(3);
-        //     const limitservice = await cursor.toArray()
-        //     res.send(limitservice)
-        // })
+      
         app.get('/product/:id', async (req, res) => {
             const id = req.params.id;
             const query = { Category:id }
@@ -73,8 +63,19 @@ async function run() {
       const email = req.params.email;
       const query = { email };
       const user = await userCollection.findOne(query);
-      res.send({ isSeller: user?.role === "seller" });
+      res.send({ isSeller: user?.role === "Seller" });
     });
+    app.get("/sellers", async (req, res) => {
+      const query = { role:"Seller" };
+      const seller = await userCollection.find(query).toArray();
+      res.send(seller);
+    });
+    app.get("/buyer", async (req, res) => {
+      const query = { role:"buyer" };
+      const seller = await userCollection.find(query).toArray();
+      res.send(seller);
+    });
+
 
         // app.post("/AddReview", async (req, res) => {
         //     const review = req.body;
