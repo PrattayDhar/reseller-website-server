@@ -76,6 +76,21 @@ async function run() {
       res.send(seller);
     });
 
+     app.delete('/buyer/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await userCollection.deleteOne(query)
+            console.log(result);
+            res.send(result)
+        })
+     app.delete('/sellers/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await userCollection.deleteOne(query)
+            console.log(result);
+            res.send(result)
+        })
+
 
         // app.post("/AddReview", async (req, res) => {
         //     const review = req.body;
