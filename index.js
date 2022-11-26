@@ -106,7 +106,23 @@ async function run() {
             res.send(result)
         })
 
-
+      app.patch("/product/ad/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: ObjectId(id) };
+      const option = { upsert: true };
+      const UpdatedDoc = {
+        $set: {
+          advertise: "true",
+        },
+      };
+      const result = await productCollection.updateOne(
+        filter,
+        UpdatedDoc,
+        option
+      );
+      res.send(result);
+    });
+   
         // app.post("/AddReview", async (req, res) => {
         //     const review = req.body;
         //     const result = await reviewcollection.insertOne(review);
