@@ -122,7 +122,23 @@ async function run() {
       );
       res.send(result);
     });
-   
+      app.patch("/sellers/ver/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: ObjectId(id) };
+      const option = { upsert: true };
+      const UpdatedDoc = {
+        $set: {
+          verify: "true",
+        },
+      };
+      const result = await userCollection.updateOne(
+        filter,
+        UpdatedDoc,
+        option
+      );
+      res.send(result);
+    });
+ 
         // app.post("/AddReview", async (req, res) => {
         //     const review = req.body;
         //     const result = await reviewcollection.insertOne(review);
