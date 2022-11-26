@@ -90,6 +90,21 @@ async function run() {
             console.log(result);
             res.send(result)
         })
+        app.get('/Sellerproduct',async(req,res)=>{
+          let query={};
+          if(req.query.email){
+            query={Email: req.query.email}
+          }
+          const result = await productCollection.find(query).toArray()
+          res.send(result)
+        })
+         app.delete('/sellersproduct/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await userCollection.deleteOne(query)
+            console.log(result);
+            res.send(result)
+        })
 
 
         // app.post("/AddReview", async (req, res) => {
