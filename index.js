@@ -138,6 +138,13 @@ async function run() {
       );
       res.send(result);
     });
+     
+         app.get('/home/add', async (req, res) => {
+            const id = req.params.id;
+            const query = { advertise:"true" }
+            const user = await productCollection.find(query).toArray();
+            res.send(user)
+        })
  
         // app.post("/AddReview", async (req, res) => {
         //     const review = req.body;
