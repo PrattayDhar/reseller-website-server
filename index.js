@@ -153,11 +153,7 @@ async function run() {
             res.send(user)
         })
 
-        app.post("/paydetails", async (req, res) => {
-            const service = req.body;
-            const result = await paymentCollection.insertOne(service);
-            res.send(result)
-        })
+        
 
      
         // app.post("/AddReview", async (req, res) => {
