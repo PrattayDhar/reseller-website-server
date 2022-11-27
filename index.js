@@ -20,6 +20,7 @@ async function run() {
         const serviceCollection = client.db('laptopdbc').collection('category')
         const productCollection = client.db('laptopdbc').collection('product')
         const userCollection = client.db('laptopdbc').collection('user')
+        const paymentCollection = client.db('laptopdbc').collection('payment')
         app.get('/category',async (req, res) => {
             const query = {}
             const cursor = serviceCollection.find(query)
@@ -145,7 +146,20 @@ async function run() {
             const user = await productCollection.find(query).toArray();
             res.send(user)
         })
- 
+          app.get('/prepayment/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const user = await productCollection.findOne(query);
+            res.send(user)
+        })
+
+        app.post("/paydetails", async (req, res) => {
+            const service = req.body;
+            const result = await paymentCollection.insertOne(service);
+            res.send(result)
+        })
+
+     
         // app.post("/AddReview", async (req, res) => {
         //     const review = req.body;
         //     const result = await reviewcollection.insertOne(review);
