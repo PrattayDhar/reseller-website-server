@@ -153,6 +153,29 @@ async function run() {
             res.send(user)
         })
 
+        app.patch("/product/report/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: ObjectId(id) };
+      const option = { upsert: true };
+      const UpdatedDoc = {
+        $set: {
+          report: "true",
+        },
+      };
+      const result = await productCollection.updateOne(
+        filter,
+        UpdatedDoc,
+        option
+      );
+      res.send(result);
+    });
+     app.get('/product/report', async (req, res) => {
+            const id = req.params.id;
+            const query = { report:"true" }
+            const user = await productCollection.find(query).toArray();
+            res.send(user)
+        })
+
         
 
      
