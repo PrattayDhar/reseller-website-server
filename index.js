@@ -151,7 +151,7 @@ async function run() {
             const query = { _id: ObjectId(id) }
             const user = await productCollection.findOne(query);
             res.send(user)
-        })
+        });
 
         app.patch("/product/report/:id", async (req, res) => {
       const id = req.params.id;
@@ -175,7 +175,26 @@ async function run() {
             const user = await productCollection.find(query).toArray();
             res.send(user)
         })
-
+          app.get('/myorders',async(req,res)=>{
+          let query={};
+          if(req.query.email){
+            query={buyeremail: req.query.email}
+          }
+          const result = await paymentCollection.find(query).toArray()
+          res.send(result)
+        })
+   app.post("/paydetails", async (req, res) => {
+            const service = req.body;
+            const result = await paymentCollection.insertOne(service);
+            res.send(result)
+        })
+         app.delete('/myproduct/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await paymentCollection.deleteOne(query)
+            console.log(result);
+            res.send(result)
+        })
         
 
      
